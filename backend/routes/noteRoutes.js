@@ -3,40 +3,46 @@ const router = express.Router()
 const Note = require('../models/Note')
 
 router.post('/', async (req,res) => {
-    try{
-        const {title, content} = req.body
+  try{
+    console.log("1. Backend received the request!");
+    console.log("Data received:", req.body);
+    const {title, content} = req.body
 
-        if(!title || !content){
-            return res.status(400).json({message: "Title and content are required"})
-        }
-
-        const newNote = new Note({title, content})
-        const savedNote = await newNote.save()
-
-        const io = req.app.get("socketio")
-        io.emit('note created', savedNote)
-        res.status(201).json(savedNote)
-    }catch (error){
-        res.status(500).json({message: "server error", error: error.message})
+    if(!title || !content){
+        return res.status(400).json({message: "Title and content are required"})
     }
+
+    const newNote = new Note({title, content})
+    console.log("2. Attempting to save to MongoDB...");
+    const savedNote = await newNote.save()
+    console.log("3. Saved successfully!");
+
+    const io = req.app.get("socketio")
+    io.emit('note_created', savedNote)
+    res.status(201).json(savedNote)
+  }catch (error){
+      res.status(500).json({message: "server error", error: error.message})
+  }
 })
 
 router.get('/', async (req, res) => {
   try {
-    const searchQuery = req.query.search;
+    // 1. Pulling 'search' from the URL (req.query.search)
+    const term = req.query.search; 
+
     let query = {};
 
-    
-    if (searchQuery) {
+    // 2. Use 'term' (or whatever you named it above) in the regex
+    if (term) {
       query = {
         $or: [
-          { title: { $regex: searchQuery, $options: 'i' } }, 
-          { content: { $regex: searchQuery, $options: 'i' } }
+          { title: { $regex: term, $options: 'i' } }, 
+          { content: { $regex: term, $options: 'i' } }
         ]
       };
     }
-    
-    const notes = await Note.find(query).sort({ createdAt: -1 }); // Fetch notes and sort by newest first
+
+    const notes = await Note.find(query).sort({ createdAt: -1 });
     res.status(200).json(notes);
   } catch (error) {
     res.status(500).json({ message: "Server Error", error: error.message });
