@@ -1,10 +1,17 @@
+
+
+
+https://github.com/user-attachments/assets/32e67890-2c73-42aa-a641-d8fc00f3ebeb
+
+
+
 # NetWrite 📝 | Real-Time Collaborative Notes
 
 A high-performance, full-stack MERN application designed for real-time note-taking and instant synchronization across multiple clients. Built with a focus on low-latency updates and optimized search functionality.
 
 ---
 
-## 🚀 Key Technical Features
+##  Key Technical Features
 
 * **Bi-Directional Real-Time Sync**: Utilizes **Socket.io** to broadcast updates (creations/deletions) to all connected clients instantly without page refreshes.
 * **Optimized Search (Debouncing)**: Implemented a custom 500ms debounce mechanism on the frontend to minimize redundant API calls and reduce database overhead.
@@ -14,7 +21,7 @@ A high-performance, full-stack MERN application designed for real-time note-taki
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 **Frontend:** React.js, Vite, CSS3 (Modern Flex/Grid)  
 **Backend:** Node.js, Express.js, Socket.io  
@@ -23,7 +30,7 @@ A high-performance, full-stack MERN application designed for real-time note-taki
 
 ---
 
-## 📂 Project Structure
+##  Project Structure
 
 ```text
 ├── backend/
