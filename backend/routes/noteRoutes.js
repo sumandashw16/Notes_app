@@ -4,18 +4,14 @@ const Note = require('../models/Note')
 
 router.post('/', async (req,res) => {
   try{
-    console.log("1. Backend received the request!");
-    console.log("Data received:", req.body);
     const {title, content} = req.body
 
     if(!title || !content){
         return res.status(400).json({message: "Title and content are required"})
     }
-
+    
     const newNote = new Note({title, content})
-    console.log("2. Attempting to save to MongoDB...");
     const savedNote = await newNote.save()
-    console.log("3. Saved successfully!");
 
     const io = req.app.get("socketio")
     io.emit('note_created', savedNote)
@@ -27,12 +23,9 @@ router.post('/', async (req,res) => {
 
 router.get('/', async (req, res) => {
   try {
-    // 1. Pulling 'search' from the URL (req.query.search)
     const term = req.query.search; 
 
     let query = {};
-
-    // 2. Use 'term' (or whatever you named it above) in the regex
     if (term) {
       query = {
         $or: [
@@ -60,7 +53,7 @@ router.delete('/:id', async (req, res) => {
 
     
     const io = req.app.get('socketio');
-    io.emit('note_deleted', noteId); // Tell all clients to remove this specific ID
+    io.emit('note_deleted', noteId); 
 
     res.status(200).json({ message: "Note deleted successfully" });
   } catch (error) {

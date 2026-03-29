@@ -9,7 +9,6 @@ const socket = io('http://localhost:5000');
 function App() {
   const [notes, setNotes] = useState([]);
 
-  // 2. Updated Fetch to accept an optional search term
   const fetchNotes = async (searchTerm = '') => {
     try {
       const response = await fetch(`http://localhost:5000/notes?search=${searchTerm}`);
@@ -48,8 +47,8 @@ function App() {
     return (
     <div className="app-container">
         <header style={{ textAlign: 'center', marginBottom: '40px' }}>
-        <h1 style={{ fontSize: '2.5rem', fontWeight: '800', color: '#0f172a' }}>NetWrite</h1>
-        <p style={{ color: '#64748b' }}>Real-time collaborative workspace</p>
+        <h1 style={{ fontSize: '2.5rem', fontWeight: '800', color: '#0f172a' }}>NOTE APP</h1>
+        <p style={{ color: '#64748b' }}>A Real-Time Notes Application</p>
         </header>
 
         <SearchBar onSearch={fetchNotes} />

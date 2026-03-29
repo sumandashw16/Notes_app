@@ -22,13 +22,6 @@ mongoose.connect(process.env.MONGO_URI)
     .catch(err => console.log(err))
 
 app.set('socketio', io)
-io.on('connection', (socket) => {
-    console.log("🟢 Socket Connected! ID:", socket.id);
-    
-    socket.on('disconnect', () => {
-        console.log("🔴 Socket Disconnected:", socket.id);
-    });
-});
 
 app.get('/', (req, res) =>{
     res.send("Server is running")

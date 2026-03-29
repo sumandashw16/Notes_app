@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import axios from 'axios';
 
 const NoteForm = () => {
   const [title, setTitle] = useState('');
@@ -8,7 +7,7 @@ const NoteForm = () => {
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent page refresh
+    e.preventDefault(); // for no refresh
 
     if (!title.trim() || !content.trim()) {
       setError('Both title and content are required!');
@@ -19,13 +18,12 @@ const NoteForm = () => {
     setLoading(true);
 
     try {
-      // Send the REST request using native fetch
       const response = await fetch('http://localhost:5000/notes', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json', // Tell the server we are sending JSON
+          'Content-Type': 'application/json', 
         },
-        body: JSON.stringify({ title, content }), // Convert our React state to a JSON string
+        body: JSON.stringify({ title, content }), 
       });
 
       if (!response.ok) {

@@ -4,12 +4,10 @@ const SearchBar = ({ onSearch }) => {
   const [term, setTerm] = useState('');
 
   useEffect(() => {
-    // Start a 500ms timer
     const delayDebounceFn = setTimeout(() => {
       onSearch(term);
     }, 500);
 
-    // CLEANUP: If the user types again, this cancels the previous timer
     return () => clearTimeout(delayDebounceFn);
   }, [term]);
 
